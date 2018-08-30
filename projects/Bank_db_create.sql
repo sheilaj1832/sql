@@ -1,38 +1,58 @@
--- create and select the database
-DROP DATABASE IF EXISTS bank_db;
-CREATE DATABASE bank_db;
-USE bank_db;
 
--- create the Product table
-CREATE TABLE Accounts (
-  ID               INT            PRIMARY KEY  AUTO_INCREMENT,
-  account_holder   VARCHAR(40)    NOT NULL     UNIQUE,
-  balance          DECIMAL(10,2)   NOT NULL,
-  fees             DECIMAL(10,2)  NOT NULL
-);
-
--- insert some rows into the Account table
 INSERT INTO Accounts VALUES
-(1, 'Angie Snyder', 3333, 88),
-(2, 'Michael Page', 5444, 175),
-(3, 'Rachel Baumann', 8888, 250),
-(4, 'Robert Mahoney', 3322, 88);
+(50, 'Donald Trump', 77778885, 0);
 
--- create the Product table
-CREATE TABLE Transactions (
-  ID               INT            PRIMARY KEY  AUTO_INCREMENT,
-  amount           DECIMAL(10,2)  NOT NULL,
-  txn_type         VARCHAR(20)    NOT NULL,
-  account_ID       INT            NOT NULL,
-  Foreign Key (account_ID) references Accounts(ID)
-);
+insert into Accounts (account_holder, balance, fees)
+  VALUES ('Dave Grohl', 2450000, 0);
+  
+INSERT INTO Accounts VALUES
+(52, 'Wonder Woman', 500000, 0),
+(54, 'Green Lantern', 400000, 0),
+(55, 'Batman', 450000, 0),
+(57, 'Cat Woman', 600000, 15),
+(60, 'Supergirl', 575000, 20),
+(61, 'The Joker', 320000, 50);
 
--- insert some rows into the Transaction table
-INSERT INTO Transactions VALUES
-(1, 500, 'Deposit', 3),
-(2, -200, 'Withdrawl', 4),
-(3, 200, 'Deposit', 4),
-(4, 248, 'Deposit', 1);
+insert into Accounts (account_holder, balance, fees) Values 
+ ('Spiderman', 780000, 0);
+ 
+update Accounts
+set fees = 100
+where balance < 500000;
+
+ -- updating an account_holder name 
+update accounts
+   Set account_holder = 'Donald J Trump'
+   where ID = 50;
+
+select * from accounts
+ where fees > 0;
+
+update accounts
+   set fees = 0;
+   
+update accounts
+  set fees = 100
+  where balance <= 100000;
+  
+delete from accounts
+  where ID = 52;
+  
+-- wildcard statements looking for a string '%A' will find the file in the field;  '% B' would pick up last names with the space B
+  select * from accounts
+  where account_holder like '% B'
+  
+  
+-- select statement with a regular expression looking for naames that start with a vowel.
+-- select *from accounts 
+
+select (distinct)balance
 
 
 
+   
+   
+   
+   
+  
+   
