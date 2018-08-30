@@ -11,13 +11,14 @@ CREATE TABLE Accounts (
   fees             DECIMAL(10,2)  NOT NULL
 );
 
--- insert some rows into the Product table
+-- insert some rows into the Account table
 INSERT INTO Accounts VALUES
 (1, 'Angie Snyder', 3333, 88),
 (2, 'Michael Page', 5444, 175),
 (3, 'Rachel Baumann', 8888, 250),
 (4, 'Robert Mahoney', 3322, 88);
 
+-- create the Product table
 CREATE TABLE Transactions (
   ID               INT            PRIMARY KEY  AUTO_INCREMENT,
   amount           DECIMAL(10,2)  NOT NULL,
@@ -26,6 +27,7 @@ CREATE TABLE Transactions (
   Foreign Key (account_ID) references Accounts(ID)
 );
 
+-- insert some rows into the Transaction table
 INSERT INTO Transactions VALUES
 (1, 500, 'Deposit', 3),
 (2, -200, 'Withdrawl', 4),
