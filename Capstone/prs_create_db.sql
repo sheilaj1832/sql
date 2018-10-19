@@ -17,11 +17,12 @@ CREATE TABLE user (
   DateCreated    DATETIME        DEFAULT CURRENT_TIMESTAMP NOT NULL,
   DateUpdated    DATETIME        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
   UpdatedByUser  INT             DEFAULT 1 NOT NULL -- SYSTEM MADE THE CHANGE INDICTED BY THE 1
-  
+
+);
+
   -- make user.email unique
 ALTER TABLE user
 ADD UNIQUE (Email);
-);
 
 CREATE TABLE vendor (
   ID              INT            PRIMARY KEY  AUTO_INCREMENT,
@@ -49,8 +50,8 @@ CREATE TABLE purchaserequest (
   DeliveryMode        VARCHAR(25)    NOT NULL,
   Status              VARCHAR(20)    NOT NULL,
   Total               DECIMAL(10,2)  NOT NULL,
-  SubmittedDate       DATETIME,     -- NULLABLE
-  ReasonForRejection  VARCHAR(100)   NOT NULL,
+  SubmittedDate       DATETIME       NOT NULL,
+  ReasonForRejection  VARCHAR(100),  -- NULLABLE
   IsActive            TinyInt(1)     DEFAULT 1 NOT NULL,
   DateCreated         DATETIME       DEFAULT CURRENT_TIMESTAMP NOT NULL,
   DateUpdated         DATETIME       DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
@@ -78,8 +79,8 @@ CREATE TABLE product (
 
 CREATE TABLE purchaserequestlineitem (
   ID                  INT             PRIMARY KEY AUTO_INCREMENT,
-  PurchaseRequestID   INT             NOT NULL UNIQUE,
-  ProductID           INT             NOT NULL UNIQUE,
+  PurchaseRequestID   INT             NOT NULL,
+  ProductID           INT             NOT NULL,
   Quantity            INT             NOT NULL,
   IsActive            TinyInt(1)      DEFAULT 1 NOT NULL,
   DateCreated         DATETIME        DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -93,8 +94,17 @@ CREATE TABLE purchaserequestlineitem (
 
 -- Add 'SYSTEM' user
 INSERT INTO user (ID, UserName, Password, FirstName, LastName, PhoneNumber, Email, IsReviewer, IsAdmin) VALUES 
-(1,'SYSTEM','xxxxx','System','System','XXX-XXX-XXXX','system@test.com',1,1),
-(2,'sblessing','login','Sean','Blessing','513-600-7096','sean@blessingtechnology.com',1,1);
+(1,'sjohnson','apple9','Sheila','Johnson','513-236-1832','sheilajohnson1832@gmail.com',1,1),
+(2,'sblessing','login','Sean','Blessing','513-600-7096','sean@blessingtechnology.com',1,1),
+(3,'dcollins','innov8','Doug','Collins','513-236-8564','doug_collins@me.com',1,1),
+(4,'dinodeb','fossils','Deb','Smith','513-555-1111','deb@trammelpark.org',1,1),
+(5,'fiona1','bibirocks','Fiona','Hippo','513-281-4700','fiona@cincinnatizoo.ord',1,1),
+(6,'jsprat','nofat','Jack','Sprat','801-555-1111','jack_sprat@nurseryrhyme.com',1,1),
+(7,'mickey1','ears','Mickey','Mouse','708-555-5555','mickey@disney.com',1,1),
+(8,'Simba','lion','Simba','King','513-777-0000','simba@king.com',1,1),
+(9,'pinkalicious','pink','Pinkalicious','Peters','201-000-7465','pinkalicious@pbs.org',1,1),
+(10,'barbie','majesty','Barbie','Smith','312-555-0000','barbie@matteltoys.com',1,1);
+
 
 -- insert vendor
 INSERT INTO vendor (ID, Code, Name, Address, City, State, Zip, PhoneNumber, Email, isPreApproved) 
@@ -103,7 +113,11 @@ VALUES
 (2,'AP-1001','Apple Inc','1 Infinite Loop','Cupertino','CA','95014','800-123-4567','genius@apple.com',1),
 (3,'AM-1001','Amazon','410 Terry Ave. North','Seattle','WA','98109','206-266-1000','amazon@amazon.com',0),
 (4,'ST-1001','Staples','9550 Mason Montgomery Rd','Mason','OH','45040','513-754-0235','support@orders.staples.com',0),
-(5,'MC-1001','Micro Center','11755 Mosteller Rd','Sharonville','OH','45241','513-782-8500','support@microcenter.com',0);
+(5,'MC-1001','Micro Center','11755 Mosteller Rd','Sharonville','OH','45241','513-782-8500','support@microcenter.com',0),
+(6,'KR-1001','Kroger','1014 Vine Street','Cincinnati','OH','45202','513-794-4100','kroger@kroger.com',0),
+(7,'TA-1001','Target','1000 Nicollet Mall','Minneapolis','MN','55403','612-304-6073','support@target.com',0),
+(8,'HD-1001','The Home Depot','2455 Paces Ferry Rd. NW','Atlanta','GA','30339','770-433-8211','support@homedepot.com',0),
+(9,'LO-1001','Lowes','1000 Lowes Blvd','Mooresville','NC','28117','800-4456937','support@lowes.com',0);
 
 -- insert base products
 INSERT INTO product (ID, VendorID, PartNumber, Name, Price , Unit , PhotoPath) VALUES (1,1,'ME280LL','iPad Mini 2',296.99,NULL,NULL);
@@ -119,6 +133,18 @@ INSERT INTO product (ID, VendorID, PartNumber, Name, Price , Unit , PhotoPath) V
 INSERT INTO product (ID, VendorID, PartNumber, Name, Price , Unit , PhotoPath) VALUES (11,4,'940600','Canon imageCLASS Copier (D530)',99.99,NULL,NULL);
 INSERT INTO product (ID, VendorID, PartNumber, Name, Price , Unit , PhotoPath) VALUES (12,5,'228148','Acer Aspire ATC-780A-UR12 Desktop Computer',399.99,'','/images/AcerAspireDesktop.jpg');
 INSERT INTO product (ID, VendorID, PartNumber, Name, Price , Unit , PhotoPath) VALUES (13,5,'279364','Lenovo IdeaCentre All-In-One Desktop',349.99,'','/images/LenovoIdeaCenter.jpg');
+INSERT INTO product (ID, VendorID, PartNumber, Name, Price , Unit , PhotoPath) VALUES (14,5,'289450','HP OfficeJet 3830 Wireless All-In-One Printer',79.99,'','/images/HP_OfficeJet_3830.jpg');
+INSERT INTO product (ID, VendorID, PartNumber, Name, Price , Unit , PhotoPath) VALUES (15,5,'112932','X-Acto School Pro Electric Pencil Sharpener',24.95,'','/images/X-Acto_SchoolElectricPencilSharpener.jpg');
+
+-- insert purchase request
+INSERT INTO purchaserequest (ID, UserID, Description, Justification, DateNeeded, DeliveryMode, Status, Total, SubmittedDate, ReasonForRejection) VALUES (1001,1,'Office Supplies','Need monthly office supplies', '2018-10-18', 'USPS', 'NEW', 59.34, '2018-10-02', 'NA');
+INSERT INTO purchaserequest (ID, UserID, Description, Justification, DateNeeded, DeliveryMode, Status, Total, SubmittedDate, ReasonForRejection) VALUES (1002,2,'Copier Supplies','Need paper', '2018-10-15', 'USPS', 'NEW', 78.85, '2018-10-05', 'NA');
+
+-- insert purchase requestlineitem
+INSERT INTO purchaserequestlineitem (ID, PurchaseRequestID, ProductID, Quantity) VALUES (1507,1001,15,1);
+INSERT INTO purchaserequestlineitem (ID, PurchaseRequestID, ProductID, Quantity) VALUES (1508,1001,3,6);
+INSERT INTO purchaserequestlineitem (ID, PurchaseRequestID, ProductID, Quantity) VALUES (1539,1002,3,8);
+INSERT INTO purchaserequestlineitem (ID, PurchaseRequestID, ProductID, Quantity) VALUES (1540,1002,4,1);
 
 -- create a user and grant privledges
 CREATE USER prs_user@localhost IDENTIFIED BY 'sesame';

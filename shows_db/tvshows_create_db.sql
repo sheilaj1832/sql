@@ -4,7 +4,7 @@ CREATE DATABASE tv_shows;
 USE tv_shows;
 
 -- create TvShow table
-CREATE TABLE TvShow (
+CREATE TABLE TvShowproduct (
   ID             INT             PRIMARY KEY  AUTO_INCREMENT,
   Name           VARCHAR(100)    NOT NULL     UNIQUE,
   Rating         VARCHAR(5)      NOT NULL,
