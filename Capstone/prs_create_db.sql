@@ -139,12 +139,14 @@ INSERT INTO product (ID, VendorID, PartNumber, Name, Price , Unit , PhotoPath) V
 -- insert purchase request
 INSERT INTO purchaserequest (ID, UserID, Description, Justification, DateNeeded, DeliveryMode, Status, Total, SubmittedDate, ReasonForRejection) VALUES (1001,1,'Office Supplies','Need monthly office supplies', '2018-10-18', 'USPS', 'NEW', 59.34, '2018-10-02', 'NA');
 INSERT INTO purchaserequest (ID, UserID, Description, Justification, DateNeeded, DeliveryMode, Status, Total, SubmittedDate, ReasonForRejection) VALUES (1002,2,'Copier Supplies','Need paper', '2018-10-15', 'USPS', 'NEW', 78.85, '2018-10-05', 'NA');
+INSERT INTO purchaserequest (ID, UserID, Description, Justification, DateNeeded, DeliveryMode, Status, Total, SubmittedDate, ReasonForRejection) VALUES (1003,5,'Office Furniture','Need Hardware', '2018-10-31', 'USPS', 'NEW', 99.99, '2018-10-19', 'NA');
 
 -- insert purchase requestlineitem
 INSERT INTO purchaserequestlineitem (ID, PurchaseRequestID, ProductID, Quantity) VALUES (1507,1001,15,1);
 INSERT INTO purchaserequestlineitem (ID, PurchaseRequestID, ProductID, Quantity) VALUES (1508,1001,3,6);
 INSERT INTO purchaserequestlineitem (ID, PurchaseRequestID, ProductID, Quantity) VALUES (1539,1002,3,8);
 INSERT INTO purchaserequestlineitem (ID, PurchaseRequestID, ProductID, Quantity) VALUES (1540,1002,4,1);
+INSERT INTO purchaserequestlineitem (ID, PurchaseRequestID, ProductID, Quantity) VALUES (1570,1003,7,1);
 
 -- create a user and grant privledges
 CREATE USER prs_user@localhost IDENTIFIED BY 'sesame';
