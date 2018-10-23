@@ -1,7 +1,7 @@
 -- create and select the database
-DROP DATABASE IF EXISTS prs;
-CREATE DATABASE prs;
-USE prs;
+DROP DATABASE IF EXISTS print;
+CREATE DATABASE print;
+USE print;
 
 CREATE TABLE user (
   ID             INT             PRIMARY KEY  AUTO_INCREMENT,
@@ -25,16 +25,17 @@ CREATE TABLE user (
 ALTER TABLE user
 ADD UNIQUE (Email);
 
-CREATE TABLE vendor (
+CREATE TABLE store (
   ID              INT            PRIMARY KEY  AUTO_INCREMENT,
-  Code            VARCHAR(10)    NOT NULL     UNIQUE,
-  Name            VARCHAR(255)   NOT NULL,
+  Market          VARCHAR(20)    NOT NULL     UNIQUE,
+  StoreName       VARCHAR(40),-- NULLABLE
+  StoreNumber	  int			 NOT NULL,
   Address         VARCHAR(255)   NOT NULL,
   City            VARCHAR(255)   NOT NULL,
   State           VARCHAR(2)     NOT NULL,
   Zip             VARCHAR(5)     NOT NULL,
   PhoneNumber     VARCHAR(12)    NOT NULL,
-  Email           VARCHAR(100)   NOT NULL,
+  English		  TinyInt(1)     DEFAULT 1 NOT NULL,
   IsPreApproved   TinyInt(1)     NOT NULL,
   IsActive        TinyInt(1)     DEFAULT 1 NOT NULL,
   DateCreated     DATETIME       DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -42,14 +43,13 @@ CREATE TABLE vendor (
   UpdatedByUser   INT            DEFAULT 1 NOT NULL -- SYSTEM MADE THE CHANGE INDICTED BY THE 1
 );
 
-CREATE TABLE purchaserequest (
+CREATE TABLE printrequest (
   ID                  INT            PRIMARY KEY  AUTO_INCREMENT,
   UserID              INT            NOT NULL,
   Description         VARCHAR(100)   NOT NULL,
   Justification       VARCHAR(255)   NOT NULL,
-  DateNeeded          DATE           NOT NULL,
   DeliveryMode        VARCHAR(25)    NOT NULL,
-  Status              VARCHAR(20)    NOT NULL,
+  Status              VARCHAR(20)    NOT NULL
   Total               DECIMAL(10,2)  NOT NULL,
   SubmittedDate       DATETIME       NOT NULL,
   ReasonForRejection  VARCHAR(100),  -- NULLABLE
@@ -66,6 +66,8 @@ CREATE TABLE product (
   VendorID            INT             NOT NULL,
   PartNumber          VARCHAR(50)     NOT NULL,
   Name                VARCHAR(150)    NOT NULL,
+  Kit			      TinyInt(1)      DEFAULT 1 NOT NULL,
+  Quantity            INT             NOT NULL,
   Price               DECIMAL(10,2)   NOT NULL,
   Unit                VARCHAR(255), -- NULLABLE
   PhotoPath           VARCHAR(255), -- NULLABLE
@@ -78,10 +80,12 @@ CREATE TABLE product (
   CONSTRAINT vendor_part unique (VendorID, PartNumber)
 );
 
-CREATE TABLE purchaserequestlineitem (
+CREATE TABLE printrequestlineitem (
   ID                  INT             PRIMARY KEY AUTO_INCREMENT,
   PurchaseRequestID   INT             NOT NULL,
   ProductID           INT             NOT NULL,
+  CalendarWeek        INT             NOT NULL,
+  Kit			      TinyInt(1)      DEFAULT 1 NOT NULL,
   Quantity            INT             NOT NULL,
   IsActive            TinyInt(1)      DEFAULT 1 NOT NULL,
   DateCreated         DATETIME        DEFAULT CURRENT_TIMESTAMP NOT NULL,

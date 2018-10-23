@@ -46,7 +46,9 @@ CONSTRAINT act_mov unique (ActorID, MovieID)
     (7, 'Night at the Museum', 2006),
     (8, 'Tropic Thunder', 2008),
 	(9, 'Zootopia', 2016),
-    (10, 'Bruce Almighty', 2003);
+    (10, 'Bruce Almighty', 2003),
+    (11, 'Envy', 2004),
+    (12, 'Black & White', 1999);   
     
 -- Add some movies
  insert into Actor VALUES
@@ -85,7 +87,11 @@ CONSTRAINT act_mov unique (ActorID, MovieID)
     (12, 8, 'Rick "Pecker" Peck'),
 	(13, 9, 'Nick Wilde'),
 	(14, 10, 'Bruce'),
-	(15, 10, 'God');
+	(15, 10, 'God'),
+    (11, 11, 'Tim Dingman'),
+    (6, 11, 'Nick Vanderpark'),
+	(11, 12, 'Mark Clear'),
+    (1, 12, 'Terry Donager');  
 
 -- create a user and grant privileges to that user
 CREATE USER bmdb_user@localhost IDENTIFIED BY 'sesame';
